@@ -43,4 +43,4 @@ class GetPostSerializer(CreatePostSerializer):
 
     class Meta(CreatePostSerializer.Meta):
         fields = CreatePostSerializer.Meta.fields + (
-            'last_comments', 'total_likes', 'total_comments')
+            'total_likes', 'total_comments', 'last_comments')

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from posts.models import Post
-
+from .permissions import IsOwnerOrAdminOrLikeOrRead
 from .serializers import (CommentSerializer, CreatePostSerializer,
                           GetPostSerializer)
 
@@ -14,7 +14,8 @@ from .serializers import (CommentSerializer, CreatePostSerializer,
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all().select_related(
         'author').prefetch_related('likes', 'comments')
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (
+        IsAuthenticatedOrReadOnly, IsOwnerOrAdminOrLikeOrRead)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -38,7 +39,8 @@ class PostViewSet(ModelViewSet):
 
 class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (
+        IsAuthenticatedOrReadOnly, IsOwnerOrAdminOrLikeOrRead)
     # exclude requests like 'put'
     http_method_names = ['get', 'post', 'delete']
 

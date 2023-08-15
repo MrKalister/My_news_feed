@@ -42,7 +42,7 @@ class Post(BaseModel):
         return self.comments.count()
 
     def __str__(self):
-        return " ".join(self.header.split()[:LIMIT_WORDS]) + " ..."
+        return ' '.join(self.header.split()[:LIMIT_WORDS]) + ' ...'
 
 
 class Comment(BaseModel):
@@ -64,4 +64,4 @@ class Comment(BaseModel):
         verbose_name_plural = 'Комментарии'
 
     def __str__(self):
-        return " ".join(self.text.split()[:LIMIT_WORDS]) + " ..."
+        return ' '.join(self.text.split()[:LIMIT_WORDS]) + ' ...'

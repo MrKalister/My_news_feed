@@ -1,3 +1,4 @@
+from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 
 from posts.models import Comment, Post
@@ -6,8 +7,7 @@ COUNT_COMMENTS = 10
 
 
 class AbstractBaseSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        slug_field='username', read_only=True)
+    author = UserCreateSerializer(read_only=True)
     created_date = serializers.DateTimeField(
         format='%d.%m.%Y, %H:%M', read_only=True)
 
@@ -19,12 +19,7 @@ class CommentSerializer(AbstractBaseSerializer):
 
 
 class CreatePostSerializer(AbstractBaseSerializer):
-    """Return resulat after create a object."""
-
-    author = serializers.SlugRelatedField(
-        slug_field='username', read_only=True)
-    created_date = serializers.DateTimeField(
-        format='%d.%m.%Y, %H:%M', read_only=True)
+    """Return resulat after create a new post."""
 
     class Meta:
         fields = ('id', 'header', 'text', 'author', 'created_date')

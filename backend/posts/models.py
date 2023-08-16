@@ -48,6 +48,7 @@ class Post(BaseModel):
 class Comment(BaseModel):
     post = models.ForeignKey(
         Post,
+        verbose_name='Новость',
         on_delete=models.CASCADE,
         related_name='comments',
     )

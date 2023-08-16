@@ -2,15 +2,18 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from dotenv import load_dotenv
+import environ
 
-load_dotenv()
+env = environ.Env(DEBUG=(bool, False), SECRET_KEY=(str, 'the-best-pass'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(BASE_DIR).parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'the-best-secret-key')
-DEBUG = os.getenv('SECRET_KEY', False)
-ALLOWED_HOSTS = []
+env.read_env(os.path.join(PROJECT_DIR, 'infra', '.env'))
+DEBUG = env.bool('DEBUG')
+SECRET_KEY = env.str('SECRET_KEY')
+ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', '127.0.0.1').split(',')
+CSRF_TRUSTED_ORIGINS = env.str('TRUSTED', 'http://127.0.0.1').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -63,12 +66,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env.bool('USE_SQLLITE', True):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': env.str('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': env.str('DB_NAME', 'postgres'),
+            'USER': env.str('POSTGRES_USER', 'postgres'),
+            'PASSWORD': env.str('POSTGRES_PASSWORD', 'postgres'),
+            'HOST': env.str('DB_HOST', 'myhost'),
+            'PORT': env.str('DB_PORT', '5000')
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -91,7 +106,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Token settings

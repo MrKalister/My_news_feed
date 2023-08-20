@@ -113,33 +113,25 @@ sudo apt-get update
 sudo apt-get install docker-compose-plugin
 sudo apt install docker-compose
 ```
-#### 3. Сopy files from a folder to a remote server.
+#### 3. Create ".env" file and fill in the sample:
+* DEBUG=False
+* USE_SQLLITE=True # If you use local server and sqllite
+* SECRET_KEY=12345 # secret key for Django project
+* ALLOWED_HOSTS=localhost,127.0.0.1,backend
+* TRUSTED=http://localhost,http://127.0.0.1 # don't forgot add your server ip/domain
+* DB_ENGINE=django.db.backends.postgresql # database backend
+* DB_NAME=postgres # name database
+* POSTGRES_USER=postgres # login for connect to database
+* POSTGRES_PASSWORD=12345 # password for connect to database
+* DB_HOST=db # name container with database
+* DB_PORT=5432 # login for connect to database
+#### 4. Сopy files from a folder to a remote server.
 ```bash
 scp . -r <username>@<host>:/home/<username>/
 ```
-#### 4. Add the user to the docker group.
-**This step can be skipped, in which case "sudo" must be specified at the beginning of each command**
-```
-sudo usermod -aG docker username
-```
-#### 5. Open bash terminal in container backend.
-##### Steps 6-7 need to do, if you are doing this for the first time.
-
-```
-docker-compose exec backend bash
-```
-#### 6. Сreate and apply migrations.
-```bash
-python manage.py makemigrations
-```
-```bash
-python manage.py migrate
-```
-#### 7. Create admin
-```bash
-python manage.py createsuperuser
-```
+#### The next steps(5-8) are similar to the installation "Installing and running the project on a local computer"
 
 ### Author
 
 **Novikov Maxim** - [github](http://github.com/MrKalister)
+*If you notice any inaccuracies, please email me*

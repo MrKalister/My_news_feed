@@ -16,11 +16,13 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'header',
+        'text'
         'author',
+        'created_date',
         'extra_field_total_likes',
         'extra_field_total_comments',
     )
-    list_filter = search_fields = ('id', 'header', 'author',)
+    list_filter = search_fields = ('id', 'header', 'author', 'text')
 
     def extra_field_total_likes(self, obj):
         return obj.total_likes()
@@ -40,6 +42,8 @@ class CommentAdmin(admin.ModelAdmin):
         'id',
         'post',
         'author',
+        'text',
+        'created_date',
     )
 
 

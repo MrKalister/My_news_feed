@@ -134,4 +134,3 @@ scp . -r <username>@<host>:/home/<username>/
 ### Author
 
 **Novikov Maxim** - [github](http://github.com/MrKalister)
-*If you notice any inaccuracies, please email me*

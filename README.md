@@ -1,6 +1,6 @@
 
 # My news feed
-This simple app [news feed](https://gotoitfox.sytes.net/api/v1/) is used to create news posts. You can like your favorite post or write comment.
+This simple app [news feed](https://gotoitfox.sytes.net/redoc/) is used to create news posts. You can like your favorite post or write comment.
 
 ## Technologies.
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat&logo=Python&logoColor=56C0C0&color=008080)](https://www.python.org/)

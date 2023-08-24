@@ -14,6 +14,8 @@ DEBUG = env.bool('DEBUG')
 SECRET_KEY = env.str('SECRET_KEY')
 ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', '127.0.0.1').split(',')
 CSRF_TRUSTED_ORIGINS = env.str('TRUSTED', 'http://127.0.0.1').split(',')
+SITE_NAME = 'https://gotoitfox.sytes.net/'
+SITE_IP_ADRESS = '3.125.90.128'
 
 # Application definition
 INSTALLED_APPS = [
